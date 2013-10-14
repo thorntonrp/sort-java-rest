@@ -7,8 +7,8 @@ package org.lds.example;
 import static org.lds.example.util.SpringSupport.*;
 
 /**
- * Application entry point. Starts up the Spring application context and
- * invokes the main controller.
+ * Main entry point. Starts up the Spring application context and invokes the
+ * main controller.
  *
  * @author Robert Thornton <thorntonrp@ldschurch.org>
  */
