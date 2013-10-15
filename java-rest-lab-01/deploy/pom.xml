@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<groupId>org.lds.example</groupId>
+		<artifactId>java-rest-lab-01</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>java-rest-lab-01-deploy</artifactId>
+	<packaging>tomcat-deployable</packaging>
+
+	<name>${project.artifactId}</name>
+
+	<properties>
+		<tomcatEnv>local</tomcatEnv>
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.lds.stack.tomcat</groupId>
+					<artifactId>stack-tomcat-maven-plugin</artifactId>
+					<configuration>
+						<endorsedJars>
+							<endorsedJar>
+								<groupId>org.lds.stack</groupId>
+								<artifactId>stack-jul-ext</artifactId>
+							</endorsedJar>
+						</endorsedJars>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.codehaus.plexus</groupId>
+							<artifactId>plexus-utils</artifactId>
+							<version>${plexusUtilsVersion}</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.2.144</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>java-rest-lab-01-web</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.lds.stack</groupId>
+			<artifactId>stack-jul-ext</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.lds.stack.tomcat</groupId>
+			<artifactId>stack-tomcat</artifactId>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+</project>

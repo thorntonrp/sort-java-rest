@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                        http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    version="3.0" metadata-complete="true">
+	<display-name>java-rest-lab-01-solution</display-name>
+
+	<!-- =========================================================== -->
+	<!-- Listeners                                                   -->
+	<!-- =========================================================== -->
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+
+	<!-- =========================================================== -->
+	<!-- Context Parameters                                          -->
+	<!-- =========================================================== -->
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:META-INF/spring/applicationContext.xml</param-value>
+	</context-param>
+
+	<session-config>
+		<cookie-config>
+			<http-only>true</http-only>
+		</cookie-config>
+		<tracking-mode>COOKIE</tracking-mode>
+	</session-config>
+
+	<!-- =========================================================== -->
+	<!-- JSP Config                                                  -->
+	<!-- =========================================================== -->
+
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<page-encoding>UTF-8</page-encoding>
+			<trim-directive-whitespaces>true</trim-directive-whitespaces>
+		</jsp-property-group>
+	</jsp-config>
+
+    <!-- =========================================================== -->
+	<!-- Filters                                                     -->
+	<!-- =========================================================== -->
+
+	<filter>
+		<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+
+   	<filter>
+	  <filter-name>springSecurityFilterChain</filter-name>
+	  <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<!-- =========================================================== -->
+	<!-- Filter Mappings                                             -->
+	<!-- =========================================================== -->
+
+	<!-- Must be first filter in chain -->
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+
+	<filter-mapping>
+	  <filter-name>springSecurityFilterChain</filter-name>
+	  <url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- =========================================================== -->
+	<!-- Servlets                                                    -->
+	<!-- =========================================================== -->
+
+	<servlet>
+		<servlet-name>java-rest-lab-01-solution</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>java-rest-lab-01-solution</servlet-name>
+		<url-pattern>/Services/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>canaryServlet</servlet-name>
+		<servlet-class>org.lds.stack.system.canary.CanaryServlet</servlet-class>
+		<!-- <init-param>
+			<description>path to the canary style sheet - defaults to canary/canary.xsl and is placed in the href attribute... xml-stylesheet type='text/xsl' href='canary/canary.xsl' </description>
+			<param-name>style-sheet-path</param-name>
+			<param-value>canary/canary.xsl</param-value>
+		</init-param> -->
+		<init-param>
+			<description>When viewing a service specific canary page, the amount of time to wait for a resource check to complete before allowing the resource checks to continue in the background. Consider 28 seconds (28000) so as to return a response before the monitoring system (Nagios) hits it's default timeout of 30 seconds</description>
+			<param-name>single-service-timeout</param-name>
+			<param-value>28000</param-value>
+		</init-param>
+		<init-param>
+			<description>When viewing a full canary page, the amount of time to wait for a resource check to complete before allowing the resource checks to continue in the background. Consider a lower value so the canary page renders within a reasonable time</description>
+			<param-name>multi-service-timeout</param-name>
+			<param-value>5000</param-value>
+		</init-param>
+		<init-param>
+			<description>Title of the Canary Page</description>
+			<param-name>page-title</param-name>
+			<param-value>java-rest-lab-01-solution Canary</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>canaryServlet</servlet-name>
+		<url-pattern>/canary/*</url-pattern>
+	</servlet-mapping>
+</web-app>

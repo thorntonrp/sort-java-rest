@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ======================================================================= -->
+<!-- Web Service Context Configuration File                                  -->
+<!-- Description:                                                            -->
+<!--     Defines and configures the web service endpoint proxies and         -->
+<!--     controllers that expose the web service application's front end.    -->
+<!--     Note that in Spring parlance a web service endpoint is a            -->
+<!--     @Controller bean, not a @Service bean because it is invoked to      -->
+<!--     handle the web service calls and thus forms the front end of the    -->
+<!--     application.                                                        -->
+<!-- ======================================================================= -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:stack-rs="http://code.lds.org/schema/spring/rs"
+	   xmlns:sec="http://www.springframework.org/schema/security"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+			http://code.lds.org/schema/spring/rs http://code.lds.org/schema/spring/rs/stack-rs-1.3.xsd
+			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd"
+	   default-lazy-init="true">
+
+
+	<!-- =================================================================== -->
+	<!-- Imported Configuration                                              -->
+	<!-- =================================================================== -->
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+
+	<!-- =================================================================== -->
+	<!-- Controller Bean Scanning                                            -->
+	<!-- =================================================================== -->
+
+	<context:component-scan base-package="org.lds.example" use-default-filters="false">
+		<context:include-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
+	</context:component-scan>
+
+
+	<!-- =================================================================== -->
+	<!-- Method-level Security                                               -->
+	<!-- =================================================================== -->
+
+	<sec:global-method-security jsr250-annotations="enabled" pre-post-annotations="enabled" secured-annotations="enabled" />
+
+
+	<!-- =================================================================== -->
+	<!-- REST Web Services                                                   -->
+	<!-- =================================================================== -->
+
+	<stack-rs:produce extensions="true">
+		<stack-rs:interfaces>
+			<ref bean="exampleWebServiceRest"/>
+		</stack-rs:interfaces>
+	</stack-rs:produce>
+
+
+	<!-- =================================================================== -->
+	<!-- JMX/Canary Beans                                                    -->
+	<!-- =================================================================== -->
+
+	<context:mbean-export default-domain="org.lds.example.java-rest-lab-01-solution"/>
+
+	<bean id="wsContextMBean" class="org.lds.stack.system.spring.SpringContextMBean" lazy-init="false"/>
+
+</beans>

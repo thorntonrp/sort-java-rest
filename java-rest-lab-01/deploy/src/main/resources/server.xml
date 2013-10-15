@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Server port="${shutdown.port}"
+        shutdown="SHUTDOWN">
+
+	<!--Initialize Jasper prior to webapps are loaded. Documentation at /docs/jasper-howto.html -->
+    <Listener className="org.apache.catalina.core.JasperListener" />
+
+	<!-- Prevent memory leaks due to use of particular java/javax APIs-->
+	<Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+	<Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+
+	<!-- Enable Stack Tomcat Configuration Encryption -->
+	<Listener className="org.lds.stack.tomcat.decrypt.DecryptingListener"/>
+
+
+    <!--
+        Global JNDI resources Documentation at /docs/jndi-resources-howto.html
+    -->
+    <GlobalNamingResources>
+
+		<Resource name="jdbc/default/DataSource"
+				  auth="Container"
+		    	  type="javax.sql.DataSource"
+		    	  factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+		    	  testWhileIdle="true"
+		    	  testOnBorrow="true"
+		    	  testOnReturn="false"
+		    	  maxActive="${ds.maxPoolSize}"
+				  initialSize="0"
+				  minIdle="0"
+		    	  removeAbandonedTimeout="120"
+		    	  removeAbandoned="true"
+		    	  logAbandoned="true"
+		    	  jmxEnabled="true"
+		    	  jdbcInterceptors="ConnectionState;StatementFinalizer;StatementDecoratorInterceptor;SlowQueryReportJmx(threshold=${ds.slowQueryThreshold});ResetAbandonedTimer"
+		    	  username="${ds.username}"
+		    	  password="${ds.password}"
+		    	  url="${ds.url}"
+		    	  driverClassName="org.h2.Driver"
+		    	  validationQuery="call 1"
+				  />
+
+    </GlobalNamingResources>
+
+    <!--
+        A "Service" is a collection of one or more "Connectors" that share a
+        single "Container" Note: A "Service" is not itself a "Container", so
+        you may not define subcomponents such as "Valves" at this level.
+        Documentation at /docs/config/service.html
+    -->
+    <Service name="Catalina">
+
+        <!--
+            A "Connector" represents an endpoint by which requests are received
+            and responses are returned. Documentation at : Java HTTP Connector:
+            /docs/config/http.html (blocking & non-blocking) Define
+            a non-SSL HTTP/1.1 Connector on port ${http.port}
+        -->
+        <Connector port="${http.port}"
+                   protocol="HTTP/1.1"
+                   connectionTimeout="20000"
+                   maxThreads="${tomcatThreadPool.maxThreads}"
+                   URIEncoding="UTF-8"/>
+
+        <!--
+        An Engine represents the entry point (within Catalina) that processes
+            every request. The Engine implementation for Tomcat stand alone
+            analyzes the HTTP headers included with the request, and passes them
+            on to the appropriate Host (virtual host). Documentation at
+            /docs/config/engine.html
+        -->
+        <Engine name="Catalina"
+                defaultHost="localhost">
+
+            <!--
+                Define the default virtual host.
+            -->
+            <Host name="localhost"
+                  appBase="webapps"
+                  unpackWARs="false"
+                  autoDeploy="false"
+                  deployOnStartup="true"
+                  deployXML="true">
+
+
+
+                <!--
+                    RemoteIPValve for running behind a proxy.
+                -->
+                <Valve className="org.apache.catalina.valves.RemoteIpValve"
+                       protocolHeader="X-Forwarded-Scheme"
+                       httpServerPort="${clientHttpPort}"
+                       httpsServerPort="${clientHttpsPort}"/>
+
+            	<!--
+            		NOTE: This valve must be after the RemoteIpValve
+                    Access log processes all example. Documentation at:
+                    /docs/config/valve.html
+                -->
+                <Valve className="org.apache.catalina.valves.AccessLogValve"
+                       directory="logs"
+                       prefix="localhost_access_log."
+                       suffix=".log"
+                       pattern="common"
+                       resolveHosts="false" />
+
+            </Host>
+        </Engine>
+    </Service>
+</Server>

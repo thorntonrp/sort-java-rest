@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+	<properties>
+		<title>${project.name} Services</title>
+		<author email="developer@ldschurch.org">{Your Name}</author>
+	</properties>
+
+	<body>
+		<section name="{Your Service Name}">
+			<p>{Document your service here}</p>
+			<p>More information on accessing this service can be found in the
+				<a href="https://ldsteams.ldschurch.org/org/dev/services/default.aspx">Service Catalog</a>.
+				More detailed API documentation for this service can be found
+				<a href="java-rest-lab-01-solution-api/apidocs/index.html">here</a>.
+			</p>
+
+			<subsection name="Java">
+				<p>{Describe how to use the service from Java here}</p>
+				<p>
+					This service can be used just like any stack standard
+					service using the stack-ws utilities. Here is an example of
+					what you would add to your spring configuration file to use
+					this service:
+				</p>
+				<source>
+<![CDATA[
+<stack-ws:consume id="exampleWebServiceSoap"
+				  service-class="org.lds.example.ws.ExampleWebService"
+				  endpoint="http://localhost:8080${contextPath}/Services/example"
+]]>
+				</source>
+				<p>
+					For more information on using stack-ws:consume see the Stack
+					documentation
+					<a href="../../../module.html?module=ws-spring">here</a>
+					.
+				</p>
+			</subsection>
+			<subsection name=".NET">
+				<p>{Describe how to use the service from .NET here}</p>
+				<p>
+					No .NET client library is currently provided for this Service. To
+					access this Service in .NET generate stubs from the WSDL and use
+					recommended .NET to Java connectivity instructions.
+				</p>
+			</subsection>
+		</section>
+	</body>
+</document>

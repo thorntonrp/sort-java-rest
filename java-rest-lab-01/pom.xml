@@ -9,16 +9,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.lds.example</groupId>
-	<artifactId>java-rest-lab-01-solution</artifactId>
+	<artifactId>java-rest-lab-01</artifactId>
 	<version>1.0</version>
 	<packaging>pom</packaging>
 
 	<name>${project.artifactId}</name>
 
 	<properties>
-		<projectName>java-rest-lab-01-solution</projectName>
+		<projectName>java-rest-lab-01</projectName>
 		<jdkVersion>1.7</jdkVersion>
-		<contextRoot>/java-rest-lab-01-solution/v1.0</contextRoot>
+		<contextRoot>/java-rest-lab-01/v1.0</contextRoot>
 		<appUrl>http://localhost:8080${contextRoot}</appUrl>
 	</properties>
 
@@ -67,7 +67,7 @@
 		<site>
 			<id>lds-nexus</id>
 			<name>LDS Maven2 Site Reports</name>
-			<url>dav:https://code.lds.org/nexus/content/sites/maven-sites/java-rest-lab-01-solution/${project.version}</url>
+			<url>dav:https://code.lds.org/nexus/content/sites/maven-sites/java-rest-lab-01/${project.version}</url>
 		</site>
 	</distributionManagement>
 

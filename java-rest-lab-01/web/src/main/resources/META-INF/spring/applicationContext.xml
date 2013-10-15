@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ======================================================================= -->
+<!-- Service Bean Context: Model/Service/DAO                                 -->
+<!-- ======================================================================= -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:stack-db="http://code.lds.org/schema/spring/db"
+	   xmlns:sec="http://www.springframework.org/schema/security"
+	   xmlns:lds-account="http://code.lds.org/schema/spring/lds-account"
+	   xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	   xmlns:stack-canary="http://code.lds.org/schema/spring/canary"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+			http://code.lds.org/schema/spring/db http://code.lds.org/schema/spring/db/stack-db-3.0.xsd
+			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+			http://code.lds.org/schema/spring/lds-account http://code.lds.org/schema/spring/lds-account/stack-lds-account-4.0.xsd
+			http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+        	http://code.lds.org/schema/spring/canary http://code.lds.org/schema/spring/canary/stack-canary-1.0.xsd"
+	   default-lazy-init="true">
+
+
+	<!-- =================================================================== -->
+	<!-- Service/Component Bean Scanning                                     -->
+	<!-- =================================================================== -->
+
+	<context:component-scan base-package="org.lds.example">
+		<context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation" />
+	</context:component-scan>
+
+
+	<!-- =================================================================== -->
+	<!-- System Properties Placeholders                                      -->
+	<!-- =================================================================== -->
+
+	<context:property-placeholder system-properties-mode="OVERRIDE" ignore-unresolvable="true" />
+
+
+	<!-- =================================================================== -->
+	<!-- Internationalization                                                -->
+	<!-- =================================================================== -->
+
+	<bean id="messageSource" class="org.lds.stack.web.spring.i18n.message.PseudoMessageSourceFacade">
+		<constructor-arg ref="delegateMessageSource" />
+	</bean>
+
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="validationMessageSource" ref="messageSource" />
+	</bean>
+
+	<bean id="delegateMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:messages</value>
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- =================================================================== -->
+	<!-- Data Source Integration                                             -->
+	<!-- =================================================================== -->
+
+	<tx:annotation-driven />
+
+	<stack-db:transaction-manager />
+
+	<jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS">
+		<jdbc:script location="classpath:META-INF/spring/example.sql" />
+	</jdbc:initialize-database>
+
+	<stack-db:data-source jndi-name="jdbc/default/DataSource" />
+
+
+	<!-- =================================================================== -->
+	<!-- LDS Account Security                                                -->
+	<!-- =================================================================== -->
+
+	<sec:authentication-manager>
+		<sec:authentication-provider ref="ldsAccountAuthenticationProvider" />
+	</sec:authentication-manager>
+
+	<sec:global-method-security secured-annotations="enabled" jsr250-annotations="enabled" pre-post-annotations="enabled" />
+
+	<sec:http security="none" request-matcher="regex" pattern="/Services/rest(/example)?\?_wadl" />
+	<sec:http security="none" request-matcher="regex" pattern="/Services/example\?wsdl(=ExampleWebService\.wsdl)?" />
+	<sec:http security="none" pattern="/canary*/**" />
+	<sec:http use-expressions="true">
+		<sec:intercept-url pattern="/Services/rest/**" access="isAuthenticated()" />
+		<sec:http-basic />
+		<sec:logout />
+	</sec:http>
+
+	<lds-account:in-memory>
+		<lds-account:user lds-account-id="123" user-name="member1" password="password1" />
+	</lds-account:in-memory>
+
+
+	<!-- =================================================================== -->
+	<!-- JMX/Canary Configuration                                            -->
+	<!-- =================================================================== -->
+
+	<context:mbean-export default-domain="org.lds.example.java-rest-lab-01" />
+
+	<bean id="manifestBean" class="org.lds.stack.system.spring.SpringManifestBean" lazy-init="false" />
+	<bean id="contextMBean" class="org.lds.stack.system.spring.SpringContextMBean" lazy-init="false" />
+	<bean id="hostName" class="org.lds.stack.system.canary.info.HostName" />
+
+	<stack-canary:resource-checks jmx-domain="org.lds.example.java-rest-lab-01">
+		<stack-canary:project-information ref="manifestBean" />
+ 		<stack-canary:project-information ref="hostName" />
+	</stack-canary:resource-checks>
+
+</beans>

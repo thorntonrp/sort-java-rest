@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ======================================================================= -->
+<!-- Integration Test Service Bean Context                                   -->
+<!-- ======================================================================= -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:stack-db="http://code.lds.org/schema/spring/db"
+	   xmlns:lds-account="http://code.lds.org/schema/spring/lds-account"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+						   http://code.lds.org/schema/spring/lds-account http://code.lds.org/schema/spring/lds-account/stack-lds-account-4.0.xsd
+						   http://code.lds.org/schema/spring/db http://code.lds.org/schema/spring/db/stack-db-3.0.xsd"
+	   default-lazy-init="true">
+
+
+	<!-- =================================================================== -->
+	<!-- Test Data Source                                                    -->
+	<!-- =================================================================== -->
+
+	<stack-db:data-source url="#{T(org.lds.example.settings.Constants).dsUrl}"
+						  user="#{T(org.lds.example.settings.Constants).dsUser}"
+						  password="#{T(org.lds.example.settings.Constants).dsPassword}"
+						  driver-class="org.h2.Driver"
+						  override="true"
+						  db-env="EMBEDDED"/>
+
+</beans>

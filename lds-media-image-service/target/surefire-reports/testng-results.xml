@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="3" passed="3">
+  <reporter-output>
+  </reporter-output>
+  <suite name="org.lds.media.image.model.TestImage" duration-ms="124" started-at="2013-10-15T11:10:05Z" finished-at="2013-10-15T11:10:05Z">
+    <groups>
+    </groups>
+    <test name="Command line test b835dee9-911b-48d4-81f3-6fff1c2d8063" duration-ms="124" started-at="2013-10-15T11:10:05Z" finished-at="2013-10-15T11:10:05Z">
+      <class name="org.lds.media.image.model.TestImage">
+        <test-method status="PASS" signature="test()[pri:0, instance:org.lds.media.image.model.TestImage@50486d1d]" name="test" duration-ms="104" started-at="2013-10-15T05:10:05Z" finished-at="2013-10-15T05:10:05Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test -->
+      </class> <!-- org.lds.media.image.model.TestImage -->
+    </test> <!-- Command line test b835dee9-911b-48d4-81f3-6fff1c2d8063 -->
+  </suite> <!-- org.lds.media.image.model.TestImage -->
+  <suite name="org.lds.media.image.model.TestImageCollection" duration-ms="26" started-at="2013-10-15T11:10:05Z" finished-at="2013-10-15T11:10:05Z">
+    <groups>
+    </groups>
+    <test name="Command line test 67f9fc28-2443-4e0f-acf6-81878b100444" duration-ms="26" started-at="2013-10-15T11:10:05Z" finished-at="2013-10-15T11:10:05Z">
+      <class name="org.lds.media.image.model.TestImageCollection">
+        <test-method status="PASS" signature="test()[pri:0, instance:org.lds.media.image.model.TestImageCollection@753c31c8]" name="test" duration-ms="24" started-at="2013-10-15T05:10:05Z" finished-at="2013-10-15T05:10:05Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test -->
+      </class> <!-- org.lds.media.image.model.TestImageCollection -->
+    </test> <!-- Command line test 67f9fc28-2443-4e0f-acf6-81878b100444 -->
+  </suite> <!-- org.lds.media.image.model.TestImageCollection -->
+  <suite name="org.lds.media.image.model.TestImageGallery" duration-ms="13" started-at="2013-10-15T11:10:05Z" finished-at="2013-10-15T11:10:05Z">
+    <groups>
+    </groups>
+    <test name="Command line test 9bd46aac-8967-4d91-a577-dcb39fe31173" duration-ms="13" started-at="2013-10-15T11:10:05Z" finished-at="2013-10-15T11:10:05Z">
+      <class name="org.lds.media.image.model.TestImageGallery">
+        <test-method status="PASS" signature="test()[pri:0, instance:org.lds.media.image.model.TestImageGallery@7cd2da43]" name="test" duration-ms="12" started-at="2013-10-15T05:10:05Z" finished-at="2013-10-15T05:10:05Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- test -->
+      </class> <!-- org.lds.media.image.model.TestImageGallery -->
+    </test> <!-- Command line test 9bd46aac-8967-4d91-a577-dcb39fe31173 -->
+  </suite> <!-- org.lds.media.image.model.TestImageGallery -->
+</testng-results>

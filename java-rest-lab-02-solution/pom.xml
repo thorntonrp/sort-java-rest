@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.lds.stack</groupId>
+		<artifactId>stack-master</artifactId>
+		<version>3.4.0</version>
+	</parent>
+
+	<groupId>org.lds.stack.training</groupId>
+	<artifactId>java-rest-lab-02-solution</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+
+	<name>${project.artifactId}</name>
+	<description></description>
+
+	<properties>
+		<projectName>${project.artifactId}</projectName>
+		<jdkVersion>1.7</jdkVersion>
+		<mainClass>org.lds.example.Main</mainClass>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jdk14</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.lds.stack</groupId>
+			<artifactId>stack-utils</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.lds.stack.maven</groupId>
+				<artifactId>stack-bundle-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>bundle</id>
+						<phase>package</phase>
+						<goals>
+							<goal>package-bundle</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>lds-main</id>
+			<name>Main Approved LDS Repo</name>
+			<url>http://code.lds.org/nexus/content/groups/main-repo</url>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>lds-contained</id>
+			<name>Main Contained LDS Repo</name>
+			<url>http://code.lds.org/nexus/content/groups/contained-repo</url>
+		</repository>
+	</repositories>
+
+</project>
