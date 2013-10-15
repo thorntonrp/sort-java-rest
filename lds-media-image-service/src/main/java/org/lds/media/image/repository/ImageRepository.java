@@ -25,7 +25,7 @@ import org.lds.stack.xml.XmlDataAccessException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import static java.util.Collections.emptyMap;
+import static java.util.Collections.*;
 import static org.lds.stack.logging.LogUtils.*;
 import static org.lds.stack.utils.CollectionUtils.*;
 import static org.lds.stack.utils.FileUtils.*;

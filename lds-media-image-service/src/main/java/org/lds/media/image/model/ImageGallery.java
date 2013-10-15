@@ -18,7 +18,7 @@ import static org.lds.stack.utils.CollectionUtils.newList;
  * @author Robert Thornton <robert.p.thornton@gmail.com>
  */
 @XmlRootElement(name="image-gallery")
-public class ImageGallery extends AbstractImageModel {
+public class ImageGallery extends AbstractImageModel<ImageGallery> {
 
 	private static final long serialVersionUID = 1L;
 

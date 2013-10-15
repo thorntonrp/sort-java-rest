@@ -13,10 +13,12 @@ import org.lds.stack.xml.XmlModelObject;
 
 /**
  *
+ * @param <T> The subclass type
+ *
  * @author Robert Thornton <robert.p.thornton@gmail.com>
  */
 @XmlType(name = "ImageModel")
-public abstract class AbstractImageModel extends XmlModelObject {
+public abstract class AbstractImageModel<T extends AbstractImageModel<T>> extends XmlModelObject implements Comparable<T> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -47,5 +49,10 @@ public abstract class AbstractImageModel extends XmlModelObject {
 
 	public URL getUrl() {
 		return url;
+	}
+
+	@Override
+	public int compareTo(T o) {
+		return this.getId().compareTo(o.getId());
 	}
 }

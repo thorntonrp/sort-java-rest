@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Robert Thornton <robert.p.thornton@gmail.com>
  */
 @XmlRootElement
-public class Image extends AbstractImageModel {
+public class Image extends AbstractImageModel<Image> {
 
 	private static final long serialVersionUID = 1L;
 
